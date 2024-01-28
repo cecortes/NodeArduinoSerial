@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino Serial Port</title>
+</head>
+<body>
+  <h1>Arduino SerialPort</h1>
+  
+  <!-- Canvas -->
+  <canvas id="myChart" width="800" height="400"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+    socket.on('disconnect', () => {
+      console.log('disconnected');
+    });
+    socket.on('message', (data) => {
+      console.log(data);
+    });
+
+    let counter = 0;
+
+    socket.on('arduino:data', (dataSerial) => {
+      console.log(dataSerial);
+      grafica.data.labels.push(counter);
+      grafica.data.datasets.forEach(dataset => {
+        dataset.data.push(dataSerial.value);
+      });
+      counter++;
+      grafica.update();
+    });
+
+    // Chart
+    const ctx = document.getElementById('myChart');
+
+    var grafica = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Serial Arduino'],
+        datasets: [{
+          label: 'Serial',
+          data: [],
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          fill: true,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Serial Arduino'
+          }
+        },
+        interaction: {
+          intersect: false,
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+            }
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Value'
+            },
+            suggestedMin: 0,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

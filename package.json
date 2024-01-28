@@ -1,0 +1,30 @@
+{
+  "name": "nodearduinoserial",
+  "version": "1.0.0",
+  "description": "A simple example to connect arduino serail and node",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cecortes/NodeArduinoSerial.git"
+  },
+  "keywords": [
+    "Node",
+    "SerialPlotter",
+    "Arduino"
+  ],
+  "author": "César López",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cecortes/NodeArduinoSerial/issues"
+  },
+  "homepage": "https://github.com/cecortes/NodeArduinoSerial#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "serialport": "^12.0.0",
+    "socket.io": "^4.7.4"
+  }
+}
